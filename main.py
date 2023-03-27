@@ -17,4 +17,11 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     cursor = connection.cursor()
-    return render_template("todo.html.jinja")
+    cursor.execute("SELECT * FROM `posts` ORDER BY `timestamp`")
+    results = cursor.fetchall()
+
+    return render_template("main.html.jinja", posts=results)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
