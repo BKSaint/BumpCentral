@@ -1,5 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 .navitems {
     height: 50px;
     width: 50px;
+}
+
+#logo {
+    font-family: 'Dancing Script', cursive;
+    text-decoration: none;
+    font-size: 50px;
+    color:#ffffff
+
+}
+
+#signup {
+    text-align:center; 
+    font-size:150%; 
+    border:1px solid white; 
+    margin-top: 20px;
+}
+
+hr {
+    color: white
 }

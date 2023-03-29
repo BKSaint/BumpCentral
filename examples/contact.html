@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>Document</title>
+    </head>
+</head>
+<body>
+    
+    <div id="navbar">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="leaning.html">Testing Page</a>
+        <a href="contact.html">Contact Me</a>
+        </div>
+    <hr>
+    
+    <main>
+    <h1>Contact Me</h1>
+
+
+    <p>
+        <span style="text-decoration: underline;">Social Media</span><br>
+        <a href="https://www.linkedin.com/in/saint-walker-181190250/">LinkedIn</a> 
+        <a href="https://docs.google.com/document/d/1zztUK4jtFUz4i067aHKISu9jv7eL8nhI4_AvXW1Y6HA/edit?usp=sharing">Resume</a>
+    
+    </p>
+
+    <p>How to Contact You:</p>
+    <form 
+        action="https://us-central1-steam-center-app-dev.cloudfunctions.net/formToEmail"
+        method="post">
+
+        <label>Name:</label><input type="text", placeholder="Saint Walker"> <br> 
+        <label>Email:</label><input type="text", placeholder="beautifulperson@email.com">  <br>
+        <label>Profession/Business:</label><input type="text", placeholder="Computer Science"> <br>
+        <input type="submit"> <input type="reset">
+        <input name="send-to" value="swalker@brooklynsteamcenter.org" hidden>
+    </form>
+    </main>
+</body>
+</html>
