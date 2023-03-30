@@ -18,7 +18,8 @@
         <h1 id="logo" style="text-align:center"><img style="height:50px; width:50px;" src="/static/logo2.png">BumpCentral</h1>
         <div class="container" id="signup">
             <div style="margin: 10px;">
-            <form action="/signup" method="POST">
+            <form action="/signup" method="POST"
+                  enctype="multipart/form-data">
                 <input type="text" name="email" placeholder="Email">
                 <br><br>
                 <input type="text" name="username" placeholder="Username">
@@ -36,6 +37,8 @@
                 <input style="color:white" type="file" name="pfp">
                 <br><br>
                 <input type="password" name="password" placeholder="Password">
+                <br><br>
+                <input type="submit" name="submit">
             </form>
             </div>      
         </div>

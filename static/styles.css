@@ -9,8 +9,8 @@
     font-family: 'Dancing Script', cursive;
     text-decoration: none;
     font-size: 50px;
-    color:#ffffff
-
+    color:#ffffff;
+    border-left: 10px;
 }
 
 #signup {
