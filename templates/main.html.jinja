@@ -15,27 +15,9 @@
         
     </head>
 
-    <body style="background-color:black;">
+    <body>
     
-       <div><a href="/signup">Sign Up</a></div>
-       <div class="container text-center" style="max-width:100%; margin:0%; margin-top: 10px;">
-            <div class="row align-items-start">
-                <div class="col col-sm-4">
-                    <a href="/" id="logo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
-                </div>
-            
-                <div class="col" style="margin-top: 30px;">
-                    <h1>Post Feed</h1>
-                    {% for post in posts%}
-                    <div>
-                        <hr>
-                        <img style="height: 300px; width: 90%;" src="{{post['media']}}">
-                        <caption style="font-size: 20px"><b>{{post['username']}}</b> {{post['caption']}}</caption><span><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/heart.png">{{post['likes']}} <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">{{post['comments']}}</span>
-                        <hr>
-                    </div>
-                    {%endfor%}
-                </div>
-            </div>
-        </div>
+    <div><a href="/signup">Sign Up</a></div>
+    <div><a href="/login">Log In</a></div>
+
     </body>
-</html>

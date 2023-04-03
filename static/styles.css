@@ -18,8 +18,20 @@
     font-size:150%; 
     border:1px solid white; 
     margin-top: 20px;
+    background-color: black;
 }
 
 hr {
     color: white
+}
+
+input {
+    background-color: black;
+    border: 1px solid gray;
+    color: white;
+    padding: 10px;
+}
+
+label, p{
+    color: gray;
 }

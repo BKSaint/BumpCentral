@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 import pymysql
 import pymysql.cursors
 
@@ -7,6 +7,8 @@ login_manager = LoginManager()
 
 app = Flask(__name__)
 login_manager.init_app(app)
+
+app.config['SECRET_KEY'] = 'something_random'
 
 class User():
     def __init__(self, id, username, banned):
@@ -40,17 +42,63 @@ connection = pymysql.connect(
     autocommit=True
 )
 
+
 @app.route("/")
-def home():
+def branch():
+    if current_user.is_authenticated:
+        return redirect('/feed')
+
+@login_required
+@app.route("/feed")
+def feed():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
 
-    return render_template("main.html.jinja", posts=results)
+    return render_template("feed.html.jinja", posts=results)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+
+    return redirect('/login')
+
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    if current_user.is_authenticated:
+        return redirect('/feed')
+    
+    if request.method == 'POST':
+        cursor = connection.cursor()
+
+        cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{request.form['username']}'")
+
+        result = cursor.fetchone()
+
+        if result is None:
+            return render_template("login.html.jinja")
+        
+        if request.form['password'] == result['password']:
+            user = User(result['id'], result['username'], result['banned'])
+
+            login_user(user)
+
+            return redirect('/feed')
+        else:
+            return render_template("login.html.jinja")
+
+        return request.form
+    elif request.method == 'GET':
+        return render_template("login.html.jinja")
+    
 
 @app.route("/signup", methods=['POST', 'GET'])
 def signup():
     
+    if current_user.is_authenticated:
+        return redirect('/feed')
+
     if request.method == 'POST':
         cursor = connection.cursor()
         
@@ -72,10 +120,6 @@ def signup():
         return redirect('/')
     elif request.method == 'GET':
         return render_template("signup.html.jinja")
-
-@app.route("/login")
-def login():
-    return render_template("login.html.jinja")
 
 if __name__ == '__main__':
     app.run(debug=True)
