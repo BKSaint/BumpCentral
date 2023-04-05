@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, send_from_directory
 from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 import pymysql
 import pymysql.cursors
+from PIL import Image
 
 login_manager = LoginManager()
 
@@ -22,6 +23,13 @@ class User():
     def get_id(self):
         return(str(self.id))
         
+def check(form):
+    if form == None:
+        form = "NULL"
+    else:
+        pass
+
+
     
 @login_manager.user_loader
 def user_loader(user_id):
@@ -42,11 +50,16 @@ connection = pymysql.connect(
     autocommit=True
 )
 
+@app.get('/media/<path:path>')
+def send_media(path):
+    return send_from_directory('media', path)
 
 @app.route("/")
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
+    else:
+        return redirect('/signup')
 
 @login_required
 @app.route("/feed")
@@ -55,8 +68,36 @@ def feed():
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
 
+    
+
     return render_template("feed.html.jinja", posts=results)
 
+
+@app.route("/post", methods=['POST'])
+@login_required
+def post_feed():
+    cursor = connection.cursor()
+
+    caption = request.form['caption']
+    media = request.files['media']
+    media_name = media.filename
+    file_extension = media_name.split('.')[-1]
+
+    if file_extension in ['jpg', 'jpeg', 'png', 'gif']:
+        media.save('media/posts/' + media_name)
+    else:
+        media = None
+
+    user_id = current_user.id
+    if media == None and caption == None:
+        return redirect('/feed')
+    
+    check(media)
+    check(caption)
+
+    cursor.execute("""INSERT INTO `posts` (`user_id`, `media`, `caption`) VALUES (%s, %s, %s)""", (user_id, media_name, caption))
+
+    return redirect('/feed')
 
 @app.route("/logout")
 def logout():
