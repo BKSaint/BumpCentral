@@ -17,33 +17,15 @@
 
     <body style="background-color:black;">
     
-        {%if current_user.id == None%}
-       <div><a href="/login">Log In</a></div>
-       {%endif%}
-
-       {%if current_user.id != None%}
-       <div><a href="/logout">Log Out</a></div>
-       {%endif%}
-
+       
        <div class="container text-center" style="max-width:100%; margin:0%; margin-top: 10px;">
             <div class="row align-items-start">
                 <div class="col col-sm-4">
                     <a href="/feed" id="logo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
                 </div>
-            
-                <div class="col" style="margin-top: 30px;">
-                    <form action="/post" method="POST" enctype="multipart/form-data"><textarea name="caption"></textarea><input type="file" name="media"><input type="submit"></form>
-                    <h1>Post Feed</h1>
-                    {% for post in posts%}
-                    <div>
-                        <hr>
-                        <img style="height: 500px; width: 500px;" src="/media/posts/{{post['media']}}">
-                        <p style="font-size: 20px"><b>{{post['username']}}</b> {{post['caption']}}</p><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/heart.png">{{post['likes']}} <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">{{post['comments']}}</p>
-                        <hr>
-                    </div>
-                    {%endfor%}
-                </div>
             </div>
+            <h1>This User does not exist</h1>
+            <button><a href="/">Go Back Home</a></button>
         </div>
     </body>
 </html>

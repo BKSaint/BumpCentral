@@ -15,35 +15,28 @@
         
     </head>
 
-    <body style="background-color:black;">
-    
-        {%if current_user.id == None%}
+    <body style="background-image:url(/static/signup.jpg)"> 
+        <a href="/feed" id="logo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
+       {%if user.id == None%}
        <div><a href="/login">Log In</a></div>
        {%endif%}
-
-       {%if current_user.id != None%}
-       <div><a href="/logout">Log Out</a></div>
-       {%endif%}
-
+                    
+       
        <div class="container text-center" style="max-width:100%; margin:0%; margin-top: 10px;">
-            <div class="row align-items-start">
-                <div class="col col-sm-4">
-                    <a href="/feed" id="logo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
-                </div>
-            
-                <div class="col" style="margin-top: 30px;">
-                    <form action="/post" method="POST" enctype="multipart/form-data"><textarea name="caption"></textarea><input type="file" name="media"><input type="submit"></form>
-                    <h1>Post Feed</h1>
-                    {% for post in posts%}
-                    <div>
-                        <hr>
+            <div class="row align-items-start" style="background-color:black; margin-left:10%; margin-right:10%; padding-bottom: 20px; padding-top: 10px; color:lightgray">
+                <h3 style="text-align:left"><img src="/media/users/{{user['pfp']}}" style="height:50px; width:75px">{{user.username}}</h3>
+                <h3 style="text-align:left">{{user.display_name}}</h3>
+                <h4 style="text-align:left; font-size: 15px;">{{user.bio}}</h4>
+            </div>
+            <br>
+            {%for post in posts%}
+                <div style="background-color:black; margin-left:10%; margin-right:10%; padding-bottom: 20px;">
                         <img style="height: 500px; width: 500px;" src="/media/posts/{{post['media']}}">
                         <p style="font-size: 20px"><b>{{post['username']}}</b> {{post['caption']}}</p><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/heart.png">{{post['likes']}} <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">{{post['comments']}}</p>
-                        <hr>
-                    </div>
-                    {%endfor%}
+                        
                 </div>
-            </div>
+                <br>
+            {%endfor%}
         </div>
     </body>
 </html>

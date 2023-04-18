@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, request, redirect, send_from_directory, abort
 from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 import pymysql
 import pymysql.cursors
@@ -54,12 +54,33 @@ connection = pymysql.connect(
 def send_media(path):
     return send_from_directory('media', path)
 
+@app.errorhandler(404)
+def page_not_found(err):
+    return render_template('404.html.jinja'), 404
+
 @app.route("/")
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
-    else:
-        return redirect('/signup')
+
+    return render_template("main.html.jinja")
+
+@app.route("/profile/<username>")
+def user_profile(username):
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
+    result = cursor.fetchone()
+    cursor.close()
+
+    if result is None:
+        abort(404)
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM `posts` WHERE `user_id` = %s", (result['id']))
+
+    post_result = cursor.fetchall()
+    return render_template("profile.html.jinja", user=result, posts=post_result)
 
 @login_required
 @app.route("/feed")
@@ -157,6 +178,7 @@ def signup():
             INSERT INTO `users` (`username`, `display_name`, `password`, `email`, `bio`, 
             `birthday`, `pfp`) VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (request.form['username'], request.form['display_name'], request.form['password'], request.form['email'], request.form['bio'], request.form['birthday'], file_name))
+   
 
         return redirect('/')
     elif request.method == 'GET':
