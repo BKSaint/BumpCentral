@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Sofia+Sans+Condensed&display=swap');
 
 .navitems {
     height: 50px;
@@ -34,4 +34,19 @@ input {
 
 label, p{
     color: gray;
+}
+
+#butn1 {
+    background-color: white;
+    color: black;
+    height: 100px;
+    width: 180px;
+    font-size: 20px;
+    vertical-align: bottom;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
+#butn1:hover {
+    background-color: black;
+    color: white
 }
