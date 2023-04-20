@@ -82,7 +82,7 @@ def user_profile(username):
     post_result = cursor.fetchall()
     return render_template("profile.html.jinja", user=result, posts=post_result)
 
-@login_required
+
 @app.route("/feed")
 def feed():
     cursor = connection.cursor()

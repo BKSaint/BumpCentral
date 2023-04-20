@@ -13,6 +13,14 @@
     border-left: 10px;
 }
 
+#homelogo {
+    font-family: 'Dancing Script', cursive;
+    text-decoration: none;
+    font-size: 40px;
+    color:#ffffff;
+    border-left: 10px;
+}
+
 #signup {
     text-align:center; 
     font-size:150%; 
@@ -46,7 +54,27 @@ label, p{
     font-family: 'Sofia Sans Condensed', sans-serif;
 }
 
+#butn2 {
+    background-color: transparent;
+    color: gray;
+    height: 40px;
+    width: 80px;
+    font-size: 20px;
+    vertical-align: middle;
+    border-radius: 12px;
+    margin: 5px;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
 #butn1:hover {
     background-color: black;
-    color: white
+    color: white;
+}
+
+.divcenter {
+    margin: 0 auto;
+}
+
+.bord {
+    border: 1px solid gray;
 }
