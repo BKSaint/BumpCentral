@@ -17,7 +17,7 @@
     <body style="background-image:url('/static/signup.jpg')">
         <h1 id="logo" style="text-align:center"><img style="height:50px; width:50px;" src="/static/logo2.png">BumpCentral</h1>
         <h2 style="color:white">{{current_user}}</h2>
-        <div class="container" id="signup">
+        <div class="container" id="signup" style="border-radius: 12px; width: 50%">
             <div style="margin: 10px;">
             <form action="/login" method="POST"
                   enctype="multipart/form-data">
@@ -27,7 +27,7 @@
                 <br><br>
                 <input style="background-color:white; color:black" type="submit" name="submit">
             </form>
-            <p>Don't have an account? <a style="text-decoration:none; color:#82078c" href="/signup">Sign Up</a></p>
+            <p>Don't have an account? <a class="fine" style="text-decoration:none;" href="/signup">Sign Up</a></p>
             </div>      
         </div>
     </body>

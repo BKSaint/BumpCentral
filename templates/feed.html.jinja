@@ -15,26 +15,28 @@
         
     </head>
 
-    <body style="background-color:black;">
+    <body style="background-image:url('/static/signup.jpg');">
 
-       <div class="container text-center" style="max-width:100%; margin:0%; margin-top: 10px;">
+       <div class="container text-center" style="max-width:100%; margin:0%">
             <div class="row align-items-start">
-                <div class="col col-sm-2 bord" style="height: 100%">
+                <div class="col col-sm-2 bord black" style="padding-bottom: 100%;">
                     <a href="/feed" id="homelogo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
                 </div>
             
                 <div class="col col-md-5 divcenter" style="margin-top: 30px;">
 
                     {%if current_user.is_authenticated%}
-                    <form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data"><textarea name="caption"></textarea><input type="file" name="media"><input type="submit"></form>
+                    <img class="cropC" src=""><form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data"><textarea style="resize:none; background-color: black" rows="3" cols="30" name="caption"></textarea>
+                    <br>
+                    <input type="file" name="media">.<input type="submit"></form>
                     {%endif%}
 
                     {%if not current_user.is_authenticated%}
-                    <div style="color:white; font-size:1.5rem;">Have something to share?<button id="butn2">Log in</button><button id="butn2">Sign up</button></div>
+                    <div style="color:white; font-size:1.5rem;">Have something to share?<a href="/login"><button id="butn2">Log in</button></a><a href="/signup"><button id="butn2">Sign up</button></div></a>
                     {%endif%}
 
                     {% for post in posts%}
-                    <div class="bord" style="margin-top: 20px">
+                    <div class="bord black" style="margin-top: 20px; border-radius: 12px;">
                         
                         <img style="height: 40%; width: 40%" src="/media/posts/{{post['media']}}">
                         <p style="font-size: 20px"><b>{{post['username']}}</b> {{post['caption']}}</p><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/heart.png">{{post['likes']}} <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">{{post['comments']}}</p>

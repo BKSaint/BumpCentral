@@ -4,6 +4,7 @@ import pymysql
 import pymysql.cursors
 from PIL import Image
 
+
 login_manager = LoginManager()
 
 app = Flask(__name__)

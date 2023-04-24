@@ -52,11 +52,12 @@ label, p{
     font-size: 20px;
     vertical-align: bottom;
     font-family: 'Sofia Sans Condensed', sans-serif;
+    text-decoration: none;
 }
 
 #butn2 {
     background-color: transparent;
-    color: gray;
+    color: white;
     height: 40px;
     width: 80px;
     font-size: 20px;
@@ -77,4 +78,34 @@ label, p{
 
 .bord {
     border: 1px solid gray;
+}
+
+.black {
+    background-color: black;
+}
+
+#member {
+    color: cyan;
+    text-decoration: none;
+}
+
+#member:hover {
+    color: white;
+}
+
+.fine {
+    color: #82078c;
+    text-decoration: none;
+}
+
+.fine:hover {
+    color: gray
+}
+
+.signing {
+    height: 50px;
+}
+
+.cropC {
+    clip-path: circle(30%); 
 }
