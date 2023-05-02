@@ -166,7 +166,10 @@ def signup():
         cursor = connection.cursor()
         
         photo = request.files['pfp']
-        file_name = photo.filename
+        if photo == None:
+            file_name = "default.png"
+        else:
+            file_name = photo.filename
         file_extension = file_name.split('.')[-1]
 
         if file_extension in ['jpg', 'jpeg', 'png', 'gif']:
