@@ -26,7 +26,7 @@
                 <div class="col col-md-5 divcenter" style="margin-top: 30px;">
 
                     {%if current_user.is_authenticated%}
-                    <img class="cropC" src=""><form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data"><div style="background-image: url('kendrick.jpeg');"></div><textarea style="resize:none; background-color: black" rows="3" cols="30" name="caption"></textarea>
+                    <img class="cropC" src=""><form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data"><div style="background-image: url('kendrick.jpeg');"></div><textarea style="resize:none; color: white; background-color: black" rows="3" cols="30" name="caption"></textarea>
                     <br>
                     <input type="file" name="media">.<input type="submit"></form>
                     {%endif%}
