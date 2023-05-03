@@ -13,12 +13,13 @@ login_manager.init_app(app)
 app.config['SECRET_KEY'] = 'something_random'
 
 class User():
-    def __init__(self, id, username, banned):
+    def __init__(self, id, username, pfp, banned):
         self.is_authenticated = True
         self.is_anonymous = False
         self.is_active = not banned
 
         self.username = username
+        self.pfp = pfp 
         self.id = id
 
     def get_id(self):
@@ -40,10 +41,10 @@ def user_loader(user_id):
     if result is None:
         return None
 
-    return User(result['id'], result['username'], result['banned'])
+    return User(result['id'], result['username'], result['pfp'], result['banned'])
 
 connection = pymysql.connect(
-    host="10.100.33.60",
+    host="localhost",
     user="swalker",
     password="221085269",
     database="swalker_appdatabase",
@@ -63,7 +64,6 @@ def page_not_found(err):
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
-
     return render_template("main.html.jinja")
 
 @app.route("/profile/<username>")
@@ -81,6 +81,7 @@ def user_profile(username):
     cursor.execute("SELECT * FROM `posts` WHERE `user_id` = %s", (result['id']))
 
     post_result = cursor.fetchall()
+    cursor.close()
     return render_template("profile.html.jinja", user=result, posts=post_result)
 
 
@@ -90,9 +91,26 @@ def feed():
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
 
-    
-
     return render_template("feed.html.jinja", posts=results)
+
+@app.route('/create')
+def pfpcreator():
+
+    return render_template("pfp.html.jinja")
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['profile_picture']
+    x = int(request.form['x'])
+    y = int(request.form['y'])
+    width = int(request.form['width'])
+    height = int(request.form['height'])
+    
+    image = Image.open(file)
+    cropped_image = image.crop((x, y, x+width, y+height))
+    cropped_image.save('profile_picture.png')
+    
+    return redirect('/profile/ ' + current_user.username)
 
 
 @app.route("/post", methods=['POST'])
@@ -107,18 +125,16 @@ def post_feed():
 
     if file_extension in ['jpg', 'jpeg', 'png', 'gif']:
         media.save('media/posts/' + media_name)
-    else:
-        media = None
 
     user_id = current_user.id
-    if media == None and caption == None:
-        return redirect('/feed')
+    # if media == None and caption == None:
+    #     return redirect('/feed')
     
-    check(media)
-    check(caption)
+    # check(media)
+    # check(caption)
 
     cursor.execute("""INSERT INTO `posts` (`user_id`, `media`, `caption`) VALUES (%s, %s, %s)""", (user_id, media_name, caption))
-
+    cursor.close()
     return redirect('/feed')
 
 @app.route("/logout")
@@ -143,18 +159,17 @@ def login():
             return render_template("login.html.jinja")
         
         if request.form['password'] == result['password']:
-            user = User(result['id'], result['username'], result['banned'])
+            user = User(result['id'], result['username'], result['pfp'],result['banned'])
 
             login_user(user)
-
+            cursor.close()
             return redirect('/feed')
+            
         else:
             return render_template("login.html.jinja")
 
-        return request.form
     elif request.method == 'GET':
         return render_template("login.html.jinja")
-    
 
 @app.route("/signup", methods=['POST', 'GET'])
 def signup():
@@ -183,7 +198,7 @@ def signup():
             `birthday`, `pfp`) VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (request.form['username'], request.form['display_name'], request.form['password'], request.form['email'], request.form['bio'], request.form['birthday'], file_name))
    
-
+        cursor.close()
         return redirect('/')
     elif request.method == 'GET':
         return render_template("signup.html.jinja")
