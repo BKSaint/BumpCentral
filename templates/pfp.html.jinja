@@ -6,74 +6,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='cropper.min.css') }}">
-    <style>
-      .img-preview {
-        overflow: hidden;
-        width: 160px;
-        height: 160px;
-        margin: 10px auto;
-        border-radius: 50%;
-      }
-      .img-preview img {
-        max-width: 100%;
-      }
-    </style>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <h1 class="text-center">Profile Picture Creator</h1>
-          <form method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="image-input">Select an image:</label>
-              <input type="file" id="image-input" name="image" accept="image/*">
+    <div class="alert alert-success">
+  <strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
+</div>
+<div class="flex">
+  <div class="left">
+<div class="profile">
+        <div class="photo">
+            <input type="file" accept="image/*">
+            <div class="photo__helper">
+                <div class="photo__frame photo__frame--circle">
+                    <canvas class="photo__canvas"></canvas>
+                    <div class="message is-empty">
+                        <p class="message--desktop">Drop your photo here or browse your computer.</p>
+                        <p class="message--mobile">Tap here to select your picture.</p>
+                    </div>
+                    <div class="message is-loading">
+                        <i class="fa fa-2x fa-spin fa-spinner"></i>
+                    </div>
+                    <div class="message is-dragover">
+                        <i class="fa fa-2x fa-cloud-upload"></i>
+                        <p>Drop your photo</p>
+                    </div>
+                    <div class="message is-wrong-file-type">
+                        <p>Only images allowed.</p>
+                        <p class="message--desktop">Drop your photo here or browse your computer.</p>
+                        <p class="message--mobile">Tap here to select your picture.</p>
+                    </div>
+                    <div class="message is-wrong-image-size">
+                        <p>Your photo must be larger than 350px.</p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-              <div class="text-center img-preview">
-                <img id="cropper-preview" class="img-thumbnail">
-              </div>
+
+            <div class="photo__options hide">
+                <div class="photo__zoom">
+                    <input type="range" class="zoom-handler">
+                </div><a href="javascript:;" class="remove"><i class="fa fa-trash"></i></a>
             </div>
-            <div class="form-group">
-              <div id="cropper" class="text-center"></div>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block">Create Profile Picture</button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
 
-    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='cropper.min.js') }}"></script>
-    <script>
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#cropper-preview').attr('src', e.target.result);
-            $('#cropper').cropper({
-              aspectRatio: 1,
-              viewMode: 1,
-              preview: '.img-preview',
-              crop: function(event) {
-                console.log(event.detail.x);
-                console.log(event.detail.y);
-                console.log(event.detail.width);
-                console.log(event.detail.height);
-              }
-            });
-          }
-          reader.readAsDataURL(input.files[0]);
+    <hr>
+    <button type="button" id="previewBtn">Preview</button>
+    <button type="button" id="uploadBtn">Upload Example</button>
+<code id="uploadExample" style="display: none">
+  <h1>Cropping on backend</h1>
+  <script>
+$('#uploadBtn').on('click', function() {
+    var formData,
+        data = p.getData();
+
+    formData = new FormData();
+    formData.append('file', data.file);
+    // Crop size ( Final image size )
+    formData.append('cropHeight', data.cropHeight);
+    formData.append('cropWidth', data.cropWidth);
+    // Image X and Y position
+    formData.append('x', data.x);
+    formData.append('y', data.y);
+    // New image size (the size needed to position the image)
+    formData.append('newWidth', data.width);
+    formData.append('newHeight', data.height);
+    // Zoom/Scale; 0.1 = 10%
+    formData.append('zoom', data.zoom);
+    // Original image size (if needed)
+    formData.append('originalWidth', data.originalWidth);
+    formData.append('originalHeight', data.originalHeight);
+
+    $.ajax({
+        url: "fakeserve/upload",
+        data: formData,
+        processData: false,
+        type: 'POST',
+        contentType: 'multipart/form-data', 
+        mimeType: 'multipart/form-data', 
+        success: function (data) {
+            console.log(data);
         }
-      }
-      $(document).ready(function() {
-        $('#image-input').change(function() {
-          readURL(this);
-        });
-      });
-    </script>
+    });
+    
+});
+</script>
+<h1>Sending already croppend (DataURL) to backend (Check security issues)</h1>
+  <p>Backend should save the image file with the DataURL content</p>
+  <script>
+$('#uploadBtn').on('click', function() {
+    var image = p.getAsDataURL();
+
+    $.post("fakeserver/upload", { image: image });
+    
+});
+</script>  
+  
+  
+</code>
+    <hr>
+    <img src="" alt="" class="preview">
+    <img src="" alt="" class="preview preview--rounded">
+    </div>
+</div>
   </body>
 </html>
