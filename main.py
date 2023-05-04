@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, send_from_directory, abort
+from flask import Flask, render_template, request, redirect, send_from_directory, abort, g
 from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 import pymysql
 import pymysql.cursors
@@ -35,7 +35,7 @@ def check(form):
     
 @login_manager.user_loader
 def user_loader(user_id):
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `users` WHERE `id` = " + user_id)
     result = cursor.fetchone()
     if result is None:
@@ -44,13 +44,25 @@ def user_loader(user_id):
     return User(result['id'], result['username'], result['pfp'], result['banned'])
 
 connection = pymysql.connect(
-    host="localhost",
+    host="10.100.33.60",
     user="swalker",
     password="221085269",
     database="swalker_appdatabase",
     cursorclass=pymysql.cursors.DictCursor,
     autocommit=True
-)
+    )
+
+def get_db():
+    '''Opens a new database connection per request.'''        
+    if not hasattr(g, 'db'):
+        g.db = connect_db()
+    return g.db    
+
+@app.teardown_appcontext
+def close_db(error):
+    '''Closes the database connection at the end of request.'''    
+    if hasattr(g, 'db'):
+        g.db.close() 
 
 @app.get('/media/<path:path>')
 def send_media(path):
@@ -64,12 +76,13 @@ def page_not_found(err):
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
+
     return render_template("main.html.jinja")
 
 @app.route("/profile/<username>")
 def user_profile(username):
 
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
     result = cursor.fetchone()
     cursor.close()
@@ -77,7 +90,7 @@ def user_profile(username):
     if result is None:
         abort(404)
 
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` WHERE `user_id` = %s", (result['id']))
 
     post_result = cursor.fetchall()
@@ -87,7 +100,7 @@ def user_profile(username):
 
 @app.route("/feed")
 def feed():
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
 
@@ -115,7 +128,7 @@ def upload():
 @app.route("/post", methods=['POST'])
 @login_required
 def post_feed():
-    cursor = connection.cursor()
+    cursor = get_db().cursor()
 
     caption = request.form['caption']
     media = request.files['media']
@@ -148,7 +161,7 @@ def login():
         return redirect('/feed')
     
     if request.method == 'POST':
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
 
         cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{request.form['username']}'")
 
@@ -177,7 +190,7 @@ def signup():
         return redirect('/feed')
 
     if request.method == 'POST':
-        cursor = connection.cursor()
+        cursor = get_db().cursor()
         
         photo = request.files['pfp']
         if photo == None:
