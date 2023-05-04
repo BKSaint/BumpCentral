@@ -1,17 +1,22 @@
+<strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Profile Picture Creator fix</title>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='cropper.min.css') }}">
-  </head>
-  <body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="/static/styles.css" type="text/css"  rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script type="text/javascript" src="/static/script.js"></script>
+  <title>Document</title>
+</head>
+<body>
     <div class="alert alert-success">
-  <strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
-</div>
-<div class="flex">
+  <div class="flex">
   <div class="left">
 <div class="profile">
         <div class="photo">
@@ -77,10 +82,10 @@ $('#uploadBtn').on('click', function() {
     formData.append('originalHeight', data.originalHeight);
 
     $.ajax({
-        url: "fakeserve/upload",
+        url: "/upload",
         data: formData,
         processData: false,
-        type: 'POST',
+        type: ['POST'],
         contentType: 'multipart/form-data', 
         mimeType: 'multipart/form-data', 
         success: function (data) {
@@ -89,14 +94,11 @@ $('#uploadBtn').on('click', function() {
     });
     
 });
-</script>
-<h1>Sending already croppend (DataURL) to backend (Check security issues)</h1>
-  <p>Backend should save the image file with the DataURL content</p>
-  <script>
+
 $('#uploadBtn').on('click', function() {
     var image = p.getAsDataURL();
 
-    $.post("fakeserver/upload", { image: image });
+    $.post("/upload", { image: image });
     
 });
 </script>  
@@ -108,5 +110,5 @@ $('#uploadBtn').on('click', function() {
     <img src="" alt="" class="preview preview--rounded">
     </div>
 </div>
-  </body>
+</body>
 </html>

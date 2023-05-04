@@ -15,7 +15,7 @@
         
     </head>
 
-    <body style="background-image:url('/static/signup.jpg');">
+    <body style="background-image:url('/static/signup.jpg');l">
 
        <div class="container text-center" style="max-width:100%; margin:0%">
             <div class="row align-items-start">
@@ -27,7 +27,7 @@
 
                     {%if current_user.is_authenticated%}
                     <form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data">
-                    <div id="circle"><a style="border: 10px solid gray;" class="cropC" href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="cropC" style="height:100px; width:100px;"></a></div><textarea style="vertical-align:middle;resize:none; color: white; background-color: black" rows="3" cols="30" name="caption"></textarea>
+                    <a style="" class="cropC" href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="cropC" style="height:120px; width:120px; border: 25px solid gray"></a><textarea style="vertical-align:middle;resize:none; color: white; background-color: black" rows="3" cols="30" name="caption"></textarea>
                     <br>
                     <input type="file" name="media">.<input type="submit"></form>
                     {%endif%}

@@ -44,7 +44,7 @@ def user_loader(user_id):
     return User(result['id'], result['username'], result['pfp'], result['banned'])
 
 connection = pymysql.connect(
-    host="localhost",
+    host="10.100.33.60",
     user="swalker",
     password="221085269",
     database="swalker_appdatabase",
@@ -101,14 +101,14 @@ def pfpcreator():
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['profile_picture']
+    filename = file.filename
     x = int(request.form['x'])
     y = int(request.form['y'])
     width = int(request.form['width'])
     height = int(request.form['height'])
-    
     image = Image.open(file)
     cropped_image = image.crop((x, y, x+width, y+height))
-    cropped_image.save('profile_picture.png')
+    cropped_image.save('/media/users/' + filename)
     
     return redirect('/profile/ ' + current_user.username)
 

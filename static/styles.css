@@ -108,6 +108,7 @@ label, p{
 
 .cropC {
     clip-path: circle(30%); 
+    padding: 3px solid white
 }
 
 #circle {
