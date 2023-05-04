@@ -35,7 +35,7 @@ def check(form):
     
 @login_manager.user_loader
 def user_loader(user_id):
-    cursor = get_db().cursor
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `users` WHERE `id` = " + user_id)
     result = cursor.fetchone()
     if result is None:
@@ -83,7 +83,7 @@ def branch():
 @app.route("/profile/<username>")
 def user_profile(username):
 
-    cursor = get_db().cursor
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
     result = cursor.fetchone()
     cursor.close()
@@ -91,7 +91,7 @@ def user_profile(username):
     if result is None:
         abort(404)
 
-    cursor = get_db().cursor
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` WHERE `user_id` = %s", (result['id']))
 
     post_result = cursor.fetchall()
@@ -101,7 +101,7 @@ def user_profile(username):
 
 @app.route("/feed")
 def feed():
-    cursor = get_db().cursor
+    cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
 
@@ -111,7 +111,7 @@ def feed():
 @app.route("/post", methods=['POST'])
 @login_required
 def post_feed():
-    cursor = get_db().cursor
+    cursor = get_db().cursor()
 
     caption = request.form['caption']
     media = request.files['media']
@@ -144,7 +144,7 @@ def login():
         return redirect('/feed')
     
     if request.method == 'POST':
-        cursor = get_db().cursor
+        cursor = get_db().cursor()
 
         cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{request.form['username']}'")
 
@@ -173,7 +173,7 @@ def signup():
         return redirect('/feed')
 
     if request.method == 'POST':
-        cursor = get_db().cursor
+        cursor = get_db().cursor()
         
         photo = request.files['pfp']
         if photo == None:
