@@ -133,9 +133,7 @@ def post_feed():
     return redirect('/feed')
 
 @app.route('/create')
-def create():
-    
-    
+def create(): 
     return render_template("pfp.html.jinja")
 
 
