@@ -700,7 +700,7 @@ $(function() {
 /**
    * DEMO
    */ 
-  var p = new profilePicture('.profile', null,
+  var proile = new profilePicture('.profile', null,
       {
         imageHelper: true,
           onRemove: function (type) {
@@ -713,7 +713,7 @@ $(function() {
 
 
   $('#previewBtn').on('click', function() {
-      $('.preview').show().attr('src',p.getAsDataURL());  
+      $('.preview').show().attr('src',proile.getAsDataURL());  
   });
 
 $('#uploadBtn').on('click', function() {
