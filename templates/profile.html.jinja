@@ -21,9 +21,10 @@
        <div><a href="/login">Log In</a></div>
        {%endif%}
                     
+       
        <div class="container text-center" style="max-width:100%; margin:0%; margin-top: 10px;">
-            <div class="row align-items-start" style="background-color:black; margin-left:10%; margin-right:10%; padding-bottom: 20px; padding-top: 10px; color:lightgray">
-                <h3 style="text-align:left"><img src="/media/users/{{user['pfp']}}" class="cropC" style="height:100px; width:100px">{{user.username}}</h3>
+            <div class="row align-items-start bord black" style="background-color:black; margin-left:10%; margin-right:10%; padding-bottom: 20px; padding-top: 10px; color:lightgray; border-radius: 12px;">
+                <h3 style="text-align:left"><img src="/media/users/{{user['pfp']}}" class="cropC" style="height:100px; width:100px;">{{user.username}}</h3>
                 <h3 style="text-align:left">{{user.display_name}}</h3>
                 <h4 style="text-align:left; font-size: 15px;">{{user.bio}}</h4>
             </div>

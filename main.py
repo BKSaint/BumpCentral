@@ -77,7 +77,7 @@ def page_not_found(err):
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
-
+    print("in home page")
     return render_template("main.html.jinja")
 
 @app.route("/profile/<username>")
@@ -106,25 +106,6 @@ def feed():
     results = cursor.fetchall()
 
     return render_template("feed.html.jinja", posts=results)
-
-@app.route('/create')
-def pfpcreator():
-
-    return render_template("pfp.html.jinja")
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['profile_picture']
-    filename = file.filename
-    x = int(request.form['x'])
-    y = int(request.form['y'])
-    width = int(request.form['width'])
-    height = int(request.form['height'])
-    image = Image.open(file)
-    cropped_image = image.crop((x, y, x+width, y+height))
-    cropped_image.save('/media/users/' + filename)
-    
-    return redirect('/profile/ ' + current_user.username)
 
 
 @app.route("/post", methods=['POST'])
