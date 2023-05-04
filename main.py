@@ -43,8 +43,9 @@ def user_loader(user_id):
 
     return User(result['id'], result['username'], result['pfp'], result['banned'])
 
-connection = pymysql.connect(
-    host="10.100.33.60",
+def connect_db():
+    return pymysql.connect(
+    host="localhost",
     user="swalker",
     password="221085269",
     database="swalker_appdatabase",
@@ -76,7 +77,7 @@ def page_not_found(err):
 def branch():
     if current_user.is_authenticated:
         return redirect('/feed')
-
+    print("in home page")
     return render_template("main.html.jinja")
 
 @app.route("/profile/<username>")
@@ -106,24 +107,6 @@ def feed():
 
     return render_template("feed.html.jinja", posts=results)
 
-@app.route('/create')
-def pfpcreator():
-
-    return render_template("pfp.html.jinja")
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['file']
-    x = int(request.form.get['x'])
-    y = int(request.form.get['y'])
-    width = int(request.form.get['width'])
-    height = int(request.form.get['height'])
-    # image = Image.open(file)
-    cropped_image = image.crop((x, y, x+width, y+height))
-    cropped_image.save('/media/users/' + filename)
-    
-    return redirect('/profile/ ' + current_user.username)
-
 
 @app.route("/post", methods=['POST'])
 @login_required
@@ -148,6 +131,25 @@ def post_feed():
     cursor.execute("""INSERT INTO `posts` (`user_id`, `media`, `caption`) VALUES (%s, %s, %s)""", (user_id, media_name, caption))
     cursor.close()
     return redirect('/feed')
+
+@app.route('/create')
+def create(): 
+    return render_template("pfp.html.jinja")
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    image = request.files['image']
+    imagename = image.filename
+    x = int(request.form['x'])
+    y = int(request.form['y'])
+    width = int(request.form['width'])
+    height = int(request.form['height'])
+    file = Image.open(image)
+    cropped_image = file.crop((x, y, x+width, y+height))
+    cropped_image.save('/media/users/' + imagename)
+    
+    return redirect('/profile/ ' + current_user.username)
 
 @app.route("/logout")
 def logout():

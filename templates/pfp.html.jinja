@@ -110,7 +110,7 @@ $('#uploadBtn').on('click', function() {
 $('#uploadBtn').on('click', function() {
     var image = proile.getAsDataURL();
 
-    $.post("/upload", { fin: image });
+    $.post("/upload", { image: image });
     
 });
 </script>  
