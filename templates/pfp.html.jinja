@@ -1,4 +1,4 @@
-<strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
+<strong>Hey there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +11,15 @@
     <link href="/static/styles.css" type="text/css"  rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script type="text/javascript" src="/static/script.js"></script>
-  <title>Document</title>
+    <script src="/static/script.js"></script>
+    <title>Document</title>
 </head>
 <body>
+    
     <div class="alert alert-success">
-  <div class="flex">
+  <strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
+</div>
+<div class="flex">
   <div class="left">
 <div class="profile">
         <div class="photo">
@@ -59,11 +62,13 @@
     <button type="button" id="uploadBtn">Upload Example</button>
 <code id="uploadExample" style="display: none">
   <h1>Cropping on backend</h1>
-  <script>
+  <script src="/static/script.js">
+    console.log("hello")
 $('#uploadBtn').on('click', function() {
+    console.log("hello")
     var formData,
         data = p.getData();
-
+    console.log("hello")
     formData = new FormData();
     formData.append('file', data.file);
     // Crop size ( Final image size )
@@ -85,7 +90,7 @@ $('#uploadBtn').on('click', function() {
         url: "/upload",
         data: formData,
         processData: false,
-        type: ['POST'],
+        type: 'POST',
         contentType: 'multipart/form-data', 
         mimeType: 'multipart/form-data', 
         success: function (data) {
@@ -94,7 +99,10 @@ $('#uploadBtn').on('click', function() {
     });
     
 });
-
+</script>
+<h1>Sending already croppend (DataURL) to backend (Check security issues)</h1>
+  <p>Backend should save the image file with the DataURL content</p>
+  <script src="/static/script.js">
 $('#uploadBtn').on('click', function() {
     var image = p.getAsDataURL();
 
