@@ -15,11 +15,6 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="/static/script.js">
-    document.getElementById('previewBtn').addEventListener("click", function() {
-    console.log("hello")
-    });
-    </script>
     <div class="alert alert-success">
   <strong>Hi there!</strong> I've noticed this plugin got some attention and I've decided to write this same plugin as a React Component. If you are interested,  <a href="https://salvagni.dev/react-profile-picture/" target="_blank" rel="nofollow">you can see it in action here.</a>
 </div>
@@ -56,7 +51,7 @@
             <div class="photo__options hide">
                 <div class="photo__zoom">
                     <input type="range" class="zoom-handler">
-                </div><a href="javascript:;" class="remove"><i class="fa fa-trash"></i></a>
+                </div><a href="script.js" class="remove"><i class="fa fa-trash"></i></a>
             </div>
         </div>
     </div>
@@ -65,21 +60,14 @@
     <button type="button" id="previewBtn">Preview</button>
     <button type="button" id="uploadBtn">Upload Example</button>
 
-    <script src="/static/script.js">
-        document.getElementById('previewBtn').addEventListener("click", function() {
-        console.log("hello")
-    });
-    </script>
+   
 
-<code id="uploadExample" style="display: none">
+ 
   <h1>Cropping on backend</h1>
-  <script src="/static/script.js">
-    console.log("hello")
+  <script src="/static/script.js"></script>
+  <script>
 document.getElementById('uploadBtn').addEventListener("click", function() {
-    console.log("hello")
-    var formData,
-        data = p.getData();
-    console.log("hello")
+    var formData, data = p.getData();
     formData = new FormData();
     formData.append('file', data.file);
     // Crop size ( Final image size )
@@ -97,6 +85,10 @@ document.getElementById('uploadBtn').addEventListener("click", function() {
     formData.append('originalWidth', data.originalWidth);
     formData.append('originalHeight', data.originalHeight);
 
+    var imageData = p.getAsDataURL();
+    
+    $.post("/upload", {image: imageData});
+
     $.ajax({
         url: "/upload",
         data: formData,
@@ -110,20 +102,10 @@ document.getElementById('uploadBtn').addEventListener("click", function() {
     });
     
 });
-</script>
-<h1>Sending already croppend (DataURL) to backend (Check security issues)</h1>
-  <p>Backend should save the image file with the DataURL content</p>
-  <script src="/static/script.js">
-document.getElementById('uploadBtn').addEventListener("click", function() {
-    var image = p.getAsDataURL();
 
-    $.post("/upload", { image: image });
-    
-});
+
 </script>  
-  
-  
-</code>
+
     <hr>
     <img src="" alt="" class="preview">
     <img src="" alt="" class="preview preview--rounded">

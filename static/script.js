@@ -230,7 +230,6 @@
                 }
                 h = newH;
                 w = newW;
-
                 self.model.imageSrc = image;
                 self.model.originalHeight = h;
                 self.model.originalWidth = w;
@@ -695,12 +694,11 @@
 
 
 
-$(function() {
-  
+
 /**
      * DEMO
      */ 
-    var p = new profilePicture('.profile', null,
+    var p = profilePicture('.profile', null,
         {
           imageHelper: true,
             onRemove: function (type) {
@@ -713,7 +711,7 @@ $(function() {
 
 
     $('#previewBtn').on('click', function() {
-        $('.preview').show().attr('src',p.getAsDataURL());  
+        $('.preview').show().attr('src',p.getAsDataURL());
     });
   
   $('#uploadBtn').on('click', function() {
@@ -721,5 +719,4 @@ $(function() {
     });
 
     
-});
 

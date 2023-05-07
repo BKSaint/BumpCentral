@@ -139,7 +139,7 @@ def create():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    image = request.files['image']
+    image = request.form['image']
     imagename = image.filename
     x = int(request.form['x'])
     y = int(request.form['y'])
