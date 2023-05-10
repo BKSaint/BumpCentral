@@ -83,6 +83,7 @@ def branch():
 @app.route("/profile/<username>")
 def user_profile(username):
 
+        
     cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
     result = cursor.fetchone()
@@ -93,19 +94,57 @@ def user_profile(username):
 
     cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` WHERE `user_id` = %s", (result['id']))
-
     post_result = cursor.fetchall()
     cursor.close()
-    return render_template("profile.html.jinja", user=result, posts=post_result)
 
+    if current_user.username == username:
+        return render_template("personal.html.jinja", user=result, posts=post_result)
+    else:
+        return render_template("profile.html.jinja", user=result, posts=post_result)
+
+@login_required
+@app.route("/settings")
+def settings():
+    cursor = get_db().cursor()
+    username = current_user.username
+    cursor.execute("SELECT * FROM `users` WHERE `username`= %s", (username))
+    results = cursor.fetchall()
+    cursor.close()
+
+    return render_template("settings.html.jinja", user=results)
 
 @app.route("/feed")
 def feed():
     cursor = get_db().cursor()
     cursor.execute("SELECT * FROM `posts` JOIN `users` ON `posts`.`user_id` = `users`.`id` ORDER BY `timestamp` DESC" )
     results = cursor.fetchall()
+    cursor.close()
 
-    return render_template("feed.html.jinja", posts=results)
+    user_id = current_user.id
+    cursor = get_db().cursor()
+    cursor.execute("SELECT * FROM `likes` WHERE `user_id` = %s", (user_id))
+    liked_posts = cursor.fetchall()
+    cursor.close()
+
+    return render_template("feed.html.jinja", posts=results, liked_posts=liked_posts)
+
+@app.route("/like")
+def like():
+    post_id = int(request.json['post_id'])
+    cursor = get_db().cursor()
+    user_id = current_user.id
+    cursor.execute("SELECT `liked` FROM `likes` WHERE `user_id` = %s AND `post_id` = %s;"), (user_id, post_id)
+    result = cursor.fetchone()
+    if result == 0:
+        liked = False
+    else:
+        liked = True        
+
+    
+    data = request.json()
+    liked = data.get('liked')
+    post_id = data.get('post')
+    cursor.execute("INSERT INTO `likes` (`user_id`, `post_id`) VALUES (%s, %s)"), (user_id, post_id)
 
 
 @app.route("/post", methods=['POST'])
@@ -139,7 +178,9 @@ def create():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    image = request.form['image']
+    image = request.form['formData']
+    cursor = get_db().cursor()
+    cursor.execute("""INSERT INTO `dump` (`dump`) VALUES (%s)""", (image))
     imagename = image.filename
     x = int(request.form['x'])
     y = int(request.form['y'])
@@ -164,8 +205,8 @@ def login():
     
     if request.method == 'POST':
         cursor = get_db().cursor()
-
-        cursor.execute(f"SELECT * FROM `users` WHERE `username` = '{request.form['username']}'")
+        username = request.form['username']
+        cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
 
         result = cursor.fetchone()
 

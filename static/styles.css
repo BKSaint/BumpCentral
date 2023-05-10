@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Sofia+Sans+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300&family=Sofia+Sans+Condensed&display=swap');
+
 
 .navitems {
     height: 50px;
@@ -107,7 +108,7 @@ label, p{
 }
 
 .cropC {
-    clip-path: circle(30%); 
+    border-radius: 50px;
 }
 
 #circle {
@@ -117,6 +118,12 @@ label, p{
     -moz-border-radius: 25px;
     border-radius: 25px;
     background: red;
+  }
+
+  #settingsicon{
+    height: 30px;
+    width: 30px;
+
   }
 
   .alert {

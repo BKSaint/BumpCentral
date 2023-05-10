@@ -86,7 +86,7 @@ document.getElementById('uploadBtn').addEventListener("click", function() {
     formData.append('originalHeight', data.originalHeight);
 
     var imageData = p.getAsDataURL();
-    
+    console.log()
     $.post("/upload", {image: imageData});
 
     $.ajax({
