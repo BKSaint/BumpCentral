@@ -214,7 +214,7 @@ def login():
             return render_template("login.html.jinja")
         
         if request.form['password'] == result['password']:
-            user = User(result['id'], result['username'], result['pfp'],result['banned'])
+            user = User(result['id'], result['username'], result['pfp'], result['banned'])
 
             login_user(user)
             cursor.close()
@@ -247,13 +247,22 @@ def signup():
         else:
             raise Exception('Invalid File Type')
 
+        username = request.form['username']
 
         cursor.execute("""
             INSERT INTO `users` (`username`, `display_name`, `password`, `email`, `bio`, 
             `birthday`, `pfp`) VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (request.form['username'], request.form['display_name'], request.form['password'], request.form['email'], request.form['bio'], request.form['birthday'], file_name))
-   
         cursor.close()
+
+        cursor = get_db().cursor()
+        cursor.execute("SELECT * FROM `users` WHERE `username` = %s", (username))
+        result = cursor.fetchall()
+    
+        user = User(result[0]['id'], result[0]['username'], result[0]['pfp'], result[0]['banned'])
+        cursor.close()
+        
+        login_user(user)
         return redirect('/')
     elif request.method == 'GET':
         return render_template("signup.html.jinja")

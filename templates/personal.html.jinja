@@ -32,7 +32,9 @@
             <br>
             {%for post in posts%}
                 <div class="bord black" style="background-color:black; margin-left:10%; margin-right:10%; padding-bottom: 20px; border-radius: 12px;">
-                        <img style="height: 500px; width: 500px;" src="/media/posts/{{post['media']}}">
+                        {% if post['media'] != "" %}
+                        <img style="height: 40%; width: 40%" src="/media/posts/{{post['media']}}">
+                        {% endif %}
                         <p style="font-size: 20px"><b>{{post['username']}}</b> {{post['caption']}}</p><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/heart.png">{{post['likes']}} <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">{{post['comments']}}</p>
                         
                 </div>
