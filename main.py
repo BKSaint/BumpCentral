@@ -120,13 +120,13 @@ def feed():
     results = cursor.fetchall()
     cursor.close()
 
-    user_id = current_user.id
-    cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM `likes` WHERE `user_id` = %s", (user_id))
-    liked_posts = cursor.fetchall()
-    cursor.close()
+    # user_id = current_user.id
+    # cursor = get_db().cursor()
+    # cursor.execute("SELECT * FROM `likes` WHERE `user_id` = %s", (user_id))
+    # liked_posts = cursor.fetchall()
+    # cursor.close()
 
-    return render_template("feed.html.jinja", posts=results, liked_posts=liked_posts)
+    return render_template("feed.html.jinja", posts=results) # liked_posts=liked_posts
 
 @app.route("/like")
 def like():

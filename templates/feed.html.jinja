@@ -31,10 +31,10 @@
                 <div class="col col-md-5 divcenter" style="margin-top: 30px;">
 
                     {%if current_user.is_authenticated%}
-                    <form style="border-bottom: 10px;" action="/post" method="POST" enctype="multipart/form-data">
-                    <a href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="cropC" style="height:80px; width:80px; border: 1px solid white; margin-right: 5px; margin-bottom: 5px"></a><textarea style="vertical-align:middle;resize:none; color: white; background-color: black; margin: 5px;" rows="3" cols="30" name="caption" placeholder="Whats on your mind?"></textarea>
+                    <form style="border-bottom: 10px; border-radius: 12px;" action="/post" method="POST" enctype="multipart/form-data">
+                    <a href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="cropC" style="height:80px; width:80px; border: 1px solid white; margin-right: 5px; margin-bottom: 5px"></a><textarea style="vertical-align:middle;resize:none; color: white; background-color: black; margin: 5px; border-radius: 12px;" rows="3" cols="30" name="caption" placeholder="Whats on your mind?"></textarea>
                     <br>
-                    <input type="file" name="media">.<input type="submit"></form>
+                    <input style="border-radius: 12px;" type="file" name="media">.<input style="border-radius: 12px;" type="submit"></form>
                     {%endif%}
 
                     {%if not current_user.is_authenticated%}
@@ -49,33 +49,7 @@
                         {% endif %}
                         <p style="font-size: 20px"><b>{{post['username'] | escape }}</b> {{ post['caption'] | escape }}</p>
             
-                        
-                        {% if liked_posts['liked'] == 0 %}
-                        <span onclick="likeButtonClicked()" id="likebutton"><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/unliked.png"></span>
-                        {% endif %}
-                        
-                        {% if liked_posts['liked'] == 1 %}
-                        <span onclick="likeButtonClicked()" id="likebutton"><img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/liked.png"></span>
-                        {% endif %}
-                        {{post['likes']}}
-                        <img style="vertical-align: middle; height: 15px; width: 15px;" src="/static/comm.png">
-                        {{post['comments']}}
-                        <script>
-                        function likeButtonClicked() {
-                            var post_id = {{post['id']}};
-                            xhr.open("POST", "/like", true);
-                            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                    var response = JSON.parse(xhr.responseText)
-                                    var liked = response.liked;
-                                        if liked == false:
-                                            console.log("not liked")
-                                }
-                            };
-                            xhr.send(JSON.stringify({post_id: post_id}))
-                        }
-                        </script>
+
                     </div>
                     {%endfor%}
                 </div>
