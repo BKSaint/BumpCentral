@@ -22,18 +22,21 @@
 
     <body style="background-image:url('/static/signup.jpg');">
 
-       <div class="container text-center" style="max-width:100%; margin:0%">
-            <div class="row align-items-start">
-
-                <div class="col col-sm-2 bord black" id="navbar">
-                    <a href="/feed" id="homelogo"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
+       <div class="container" style="max-width:100%; margin:0%">
+            <div id="row" class="row align-items-start">
+                <div class="col col-sm-2 bord black" id="navbar" style="">
+                    <div id="fill">
+                        <div class="row">
+                                <a href="/feed" id="homelogo" style="text-align: left;"><img alt="" class="navitems" src="/static/logomain.png">BumpCentral</a>
+                                <img src="/media/users/{{current_user['pfp']}}"  class="pfpB" style="margin-right: 5px;">
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col col-md-5 divcenter" style="margin-top: 30px;">
+                <div class="col col-md-5 center text-center" style="margin-top: 30px;">
 
                     {%if current_user.is_authenticated%}
                     <form style="border-bottom: 10px; border-radius: 12px;" action="/post" method="POST" enctype="multipart/form-data">
-                    <a href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="cropC" style="height:80px; width:80px; border: 1px solid white; margin-right: 5px; margin-bottom: 5px"></a><textarea style="vertical-align:middle;resize:none; color: white; background-color: black; margin: 5px; border-radius: 12px;" rows="3" cols="30" name="caption" placeholder="Whats on your mind?"></textarea>
+                    <a href="/profile/{{current_user['username']}}"><img src="/media/users/{{current_user['pfp']}}" class="pfpA" style="margin-right: 5px; margin-bottom: 5px"></a><textarea style="vertical-align:middle;resize:none; color: white; background-color: black; margin: 5px; border-radius: 12px;" rows="3" cols="30" name="caption" placeholder="Whats on your mind?"></textarea>
                     <br>
                     <input style="border-radius: 12px;" type="file" name="media">.<input style="border-radius: 12px;" type="submit"></form>
                     {%endif%}
