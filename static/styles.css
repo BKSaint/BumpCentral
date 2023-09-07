@@ -7,19 +7,19 @@
 
 @media all and (min-width: 25px)   {  #navbar  { font-size:0.4em; } }
 @media all and (min-width: 50px)  {  #navbar  { font-size:0.4em;  } }
-@media all and (min-width: 100px)  {  #navbar  { font-size:0.6em;  } }
-@media all and (min-width: 200px)  {  #navbar  { font-size:0.6em;  } }
-@media all and (min-width: 300px)  {  #navbar  { font-size:0.6em;  } }
-@media all and (min-width: 400px)  {  #navbar  { font-size:1.6em;  } }
-@media all and (min-width: 500px)  {  #navbar  { font-size:0.8em;  } }
-@media all and (min-width: 600px)  {  #navbar  { font-size:0.8em;  } }
-@media all and (min-width: 700px)  {  #navbar  { font-size:0.8em;  } }
-@media all and (min-width: 800px)  {  #navbar  { font-size:1.0em;  } .navitems { width: 20px; height: 20px; } }
+@media all and (min-width: 100px)  {  #navbar  { font-size:1.em;  } }
+@media all and (min-width: 200px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 300px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 400px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 500px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 600px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 700px)  {  #navbar  { font-size:1.5em;  } }
+@media all and (min-width: 800px)  {  #navbar  { font-size:1.5em;  } .navitems { width: 20px; height: 20px; } }
 @media all and (min-width: 900px) {  #navbar  { font-size:1.2em;  } .navitems { width: 23x; height: 23px; } }
-@media all and (max-width: 877px) {  #navbar { height: 102px; width: 100vh; padding-left: 10px;} .pfpA { height: 0px; width: 0px; border: 0px solid white} .pfpB { height: 60px; width: 60px; border: 1px solid white}  }
+@media all and (max-width: 877px) {  #navbar { height: 102px; width: 100vh; padding-left: 10px;} .pfpA { height: 0px; width: 0px; border: 0px solid #606463} .pfpB { height: 60px; width: 60px; border: 2px solid #606463}  }
 @media all and (max-width: 900px) {  .navitems { width: 20px; height: 20px; } }
 @media all and (min-width: 901px) {  .navitems { width: 20px; height: 20px; } }
-@media all and (min-width: 878px) {  #navbar { height: 100vh; } .pfpA { height: 80px; width: 80px; border: 1px solid white} .pfpB { height: 0px; width: 0px; border: 0px solid white} } 
+@media all and (min-width: 878px) {  #navbar { height: 100vh; } .pfpA { height: 80px; width: 80px; border: 3px solid #606463} .pfpB { height: 0px; width: 0px; border: 0px solid #606463} } 
 @media all and (min-width: 1000px) {  #navbar  { font-size:1.2em;  } .navitems { width: 23px; height: 23px; } }
 @media all and (min-width: 1100px) {  #navbar  { font-size:1.4em;  } .navitems { width: 29px; height: 29px; } }
 @media all and (min-width: 1200px) {  #navbar  { font-size:1.4em;  } .navitems { width: 32px; height: 32px; } }
@@ -107,7 +107,7 @@ label, p{
 }
 
 .bord {
-    border: 1px solid gray;
+    border: 2px solid #606463;
 }
 
 .black {
@@ -137,10 +137,10 @@ label, p{
 }
 
 .pfpB {
-    position: relative;
-    bottom: 2px;
-    margin-left: 100%;
-    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+
     border-radius: 50px;
 }
 
